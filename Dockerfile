@@ -51,12 +51,6 @@ RUN install_packages \
 
 
 ###################################
-## C Shell
-RUN install_packages \
-    csh
-
-
-###################################
 ## Friendly Interactive Shell
 RUN install_packages \
     fish

@@ -9,11 +9,10 @@
   - https://learn.microsoft.com/en-us/powershell/scripting/install/install-debian?view=powershell-7.5
 - Thompson Shell as tsh and etsh
   - https://etsh.dev/src
-- C Shell as csh
 - Z Shell as zsh and rzsh
 - Friendly Interactive Shell as fish
 - Korn Shell as ksh and rksh
-- TENEX C Shell as tcsh
+- TENEX C Shell as tcsh and csh
 - xonsh as xonsh
 - nushell as nu
 
