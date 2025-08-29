@@ -102,4 +102,6 @@ RUN apt remove -y \
 
 RUN apt autoremove -y
 
+COPY ./README.md /root
+
 WORKDIR /root

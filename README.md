@@ -1,20 +1,20 @@
 # UNIX Shells and more
+---
+All sizes are taken from du, which uses factors of 1024 i.e. Kibibyte/Mebibyte
 
-### Preinstalled
-- Bourne Again Shell as bash and rbash
-- Debian Almquist Shell as sh and dash
-
-### Installed
-- Powershell as pwsh
-  - https://learn.microsoft.com/en-us/powershell/scripting/install/install-debian?view=powershell-7.5
-- Thompson Shell as tsh and etsh
-  - https://etsh.dev/src
-- Z Shell as zsh and rzsh
-- Friendly Interactive Shell as fish
-- Korn Shell as ksh and rksh
-- TENEX C Shell as tcsh and csh
-- xonsh as xonsh
-- nushell as nu
+Name | aliases | size
+---|---|---
+Bourne Again Shell | bash, rbash | 1.3M
+Debian Almquist Shell | sh, dash | 124K
+[Powershell](https://learn.microsoft.com/en-us/powershell/scripting/install/install-debian?view=powershell-7.5) | pwsh | 76K
+[Thompson Shell](https://etsh.dev/src) | tsh, etsh | 40K, 88K
+Z Shell | zsh, rzsh | 848K
+Friendly Interactive Shell | fish | 1.8M
+Korn Shell | ksh, ksh93, rksh | 1.5M
+TENEX C Shell | tcsh, csh | 424K
+xonsh | xonsh | 4K?
+nushell | nu | 44M
+elvish | elvish | 7.9M
 
 ### Makefile
 - make all
