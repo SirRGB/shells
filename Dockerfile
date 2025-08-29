@@ -19,6 +19,8 @@ RUN dpkg -i /tmp/packages-microsoft-prod.deb
 RUN install_packages \
      powershell
 
+# Remove source code
+RUN find /opt/microsoft/ -type f ! -name "pwsh" -exec rm -rf {} \;
 
 ###################################
 ## (Enhanced) Thompson Shell
@@ -42,6 +44,9 @@ RUN ./configure && make etsh tsh
 # Symlink for usage
 RUN ln -s /opt/etsh/etsh-current-24/tsh /bin/tsh
 RUN ln -s /opt/etsh/etsh-current-24/etsh /bin/etsh
+
+# Remove source code
+RUN find /opt/etsh/ -type f ! -name "tsh" ! -name "etsh" -exec rm -rf {} \;
 
 
 ###################################
@@ -90,7 +95,6 @@ RUN install_packages \
 
 ###################################
 # Cleanup
-RUN rm /tmp/packages-microsoft-prod.deb /tmp/etsh-current-24.tar.gz
 RUN apt remove -y \
     ca-certificates \
     curl \
@@ -101,6 +105,7 @@ RUN apt remove -y \
     wget
 
 RUN apt autoremove -y
+RUN rm -rf /tmp/
 
 COPY ./README.md /root
 
