@@ -1,12 +1,16 @@
 FROM docker.io/bitnami/minideb:bookworm
 
-# Common build dependencies
+###################################
+# Build dependencies
 RUN install_packages \
     ca-certificates \
     curl \
     gnupg \
     ncurses-bin \
-    wget
+    wget \
+    gcc \
+    make \
+    libc-dev
 
 
 ###################################
@@ -15,21 +19,9 @@ RUN install_packages \
 RUN wget https://packages.microsoft.com/config/debian/12/packages-microsoft-prod.deb --directory-prefix=/tmp
 RUN dpkg -i /tmp/packages-microsoft-prod.deb
 
-# Install PowerShell
-RUN install_packages \
-     powershell
-
-# Remove source code
-RUN find /opt/microsoft/ -type f ! -name "pwsh" -exec rm -rf {} \;
 
 ###################################
 ## (Enhanced) Thompson Shell
-# Install dependencies
-RUN install_packages \
-    gcc \
-    make \
-    libc-dev
-
 # Get the source
 RUN wget https://etsh.dev/src/current/snapshots/etsh-current-24/etsh-current-24.tar.gz --directory-prefix=/tmp
 
@@ -45,53 +37,33 @@ RUN ./configure && make etsh tsh
 RUN ln -s /opt/etsh/etsh-current-24/tsh /bin/tsh
 RUN ln -s /opt/etsh/etsh-current-24/etsh /bin/etsh
 
-# Remove source code
-RUN find /opt/etsh/ -type f ! -name "tsh" ! -name "etsh" -exec rm -rf {} \;
-
 
 ###################################
-## Z Shell
-RUN install_packages \
-    zsh
-
-
-###################################
-## Friendly Interactive Shell
-RUN install_packages \
-    fish
-
-
-###################################
-## Korn Shell
-RUN install_packages \
-    ksh
-
-
-###################################
-## Teken C Shell
-RUN install_packages \
-    tcsh
-
-
-###################################
-## xonsh
-RUN install_packages \
-    xonsh
-
+## Nushell
+#Download and install the Nushell repository GPG keys
 RUN curl -fsSL https://apt.fury.io/nushell/gpg.key | gpg --dearmor -o /etc/apt/trusted.gpg.d/fury-nushell.gpg
 RUN echo "deb https://apt.fury.io/nushell/ /" | tee /etc/apt/sources.list.d/fury.list
 
 
 ###################################
-## nushell
+# Install PowerShell
 RUN install_packages \
-    nushell
-
-
-###################################
-## elvish
-RUN install_packages \
+     powershell \
+## Z Shell
+    zsh \
+## Friendly Interactive Shell
+    fish \
+## Korn Shell
+    ksh \
+## Teken C Shell
+    tcsh \
+## Xonsh
+    xonsh \
+## Nushell
+    nushell \
+## Elvish Shell
      elvish
+
 
 ###################################
 # Cleanup
@@ -107,6 +79,10 @@ RUN apt remove -y \
 RUN apt autoremove -y
 RUN rm -rf /tmp/
 
-COPY ./README.md /root
+# Remove PowerShell source code
+RUN find /opt/microsoft/ -type f ! -name "pwsh" -exec rm -rf {} \;
+# Remove Thompson Shell source code
+RUN find /opt/etsh/ -type f ! -name "tsh" ! -name "etsh" -exec rm -rf {} \;
 
+COPY ./README.md /root
 WORKDIR /root
