@@ -1,7 +1,7 @@
 FROM docker.io/bitnami/minideb:bookworm
 
 ###################################
-# Build dependencies
+## Install build dependencies
 RUN install_packages \
     ca-certificates \
     curl \
@@ -14,13 +14,14 @@ RUN install_packages \
 
 
 ###################################
+## Prepare install
+
 ## PowerShell
 # Download and install the Microsoft repository GPG keys
 RUN wget https://packages.microsoft.com/config/debian/12/packages-microsoft-prod.deb --directory-prefix=/tmp
 RUN dpkg -i /tmp/packages-microsoft-prod.deb
 
 
-###################################
 ## (Enhanced) Thompson Shell
 # Get the source
 RUN wget https://etsh.dev/src/current/snapshots/etsh-current-24/etsh-current-24.tar.gz --directory-prefix=/tmp
@@ -38,35 +39,35 @@ RUN ln -s /opt/etsh/etsh-current-24/tsh /bin/tsh
 RUN ln -s /opt/etsh/etsh-current-24/etsh /bin/etsh
 
 
-###################################
 ## Nushell
-#Download and install the Nushell repository GPG keys
+# Download and install the Nushell repository GPG keys
 RUN curl -fsSL https://apt.fury.io/nushell/gpg.key | gpg --dearmor -o /etc/apt/trusted.gpg.d/fury-nushell.gpg
 RUN echo "deb https://apt.fury.io/nushell/ /" | tee /etc/apt/sources.list.d/fury.list
 
 
 ###################################
-# Install PowerShell
+## Install Shells
 RUN install_packages \
+# PowerShell
      powershell \
-## Z Shell
+# Z Shell
     zsh \
-## Friendly Interactive Shell
+# Friendly Interactive Shell
     fish \
-## Korn Shell
+# Korn Shell
     ksh \
-## Teken C Shell
+# Teken C Shell
     tcsh \
-## Xonsh
+# Xonsh
     xonsh \
-## Nushell
+# Nushell
     nushell \
-## Elvish Shell
-     elvish
+# Elvish Shell
+    elvish
 
 
 ###################################
-# Cleanup
+## Cleanup
 RUN apt remove -y \
     ca-certificates \
     curl \
@@ -83,4 +84,6 @@ RUN rm -rf /tmp/*
 RUN find /opt/etsh/ -type f ! -name "tsh" ! -name "etsh" -exec rm -rf {} \;
 
 COPY ./README.md /root
+COPY ./*.sh /root
+COPY ./*.ps1 /root
 WORKDIR /root
