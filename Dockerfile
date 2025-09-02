@@ -77,10 +77,8 @@ RUN apt remove -y \
     wget
 
 RUN apt autoremove -y
-RUN rm -rf /tmp/
+RUN rm -rf /tmp/*
 
-# Remove PowerShell source code
-RUN find /opt/microsoft/ -type f ! -name "pwsh" -exec rm -rf {} \;
 # Remove Thompson Shell source code
 RUN find /opt/etsh/ -type f ! -name "tsh" ! -name "etsh" -exec rm -rf {} \;
 
