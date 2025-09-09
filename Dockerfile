@@ -22,7 +22,7 @@ RUN dpkg --install /tmp/libicu72_72.1-3+deb12u1_amd64.deb
 ## PowerShell
 # Download and install the Microsoft repository GPG keys
 RUN wget https://packages.microsoft.com/config/debian/12/packages-microsoft-prod.deb --directory-prefix=/tmp
-RUN dpkg -i /tmp/packages-microsoft-prod.deb
+RUN dpkg --install /tmp/packages-microsoft-prod.deb
 
 
 ## (Enhanced) Thompson Shell
