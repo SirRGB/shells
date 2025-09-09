@@ -15,6 +15,7 @@ TENEX C Shell | tcsh, csh | 424K
 xonsh | xonsh | 4K?
 nushell | nu | 44M
 elvish | elvish | 7.9M
+[yet another shell](https://github.com/magicant/yash/blob/trunk/INSTALL) | yash | 1.2M
 
 ### Makefile
 - make all

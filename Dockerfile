@@ -48,6 +48,16 @@ RUN curl -fsSL https://apt.fury.io/nushell/gpg.key | gpg --dearmor -o /etc/apt/t
 RUN echo "deb https://apt.fury.io/nushell/ /" | tee /etc/apt/sources.list.d/fury.list
 
 
+## yet another shell
+# Get the source
+RUN wget https://github.com/magicant/yash/releases/download/2.59/yash-2.59.tar.gz --directory-prefix=/tmp
+RUN tar zxf /tmp/yash-2.59.tar.gz -C /tmp/
+
+# Build yash and install
+WORKDIR /tmp/yash-2.59
+RUN ./configure --disable-lineedit && make install
+
+
 ###################################
 ## Install Shells
 RUN install_packages \
