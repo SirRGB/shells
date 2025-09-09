@@ -58,6 +58,11 @@ WORKDIR /tmp/yash-2.59
 RUN ./configure --disable-lineedit && make install
 
 
+## dune
+RUN wget --output-document dune https://github.com/adam-mcdaniel/dune/releases/download/v0.1.9/dune_linux_v0.1.9
+RUN mv ./dune /bin && chmod 770 /bin/dune
+
+
 ###################################
 ## Install Shells
 RUN install_packages \

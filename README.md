@@ -16,6 +16,7 @@ xonsh | xonsh | 4K?
 nushell | nu | 44M
 elvish | elvish | 7.9M
 [yet another shell](https://github.com/magicant/yash/blob/trunk/INSTALL) | yash | 1.2M
+[dune](https://github.com/adam-mcdaniel/dune) | dune | 7.2M
 
 ### Makefile
 - make all
