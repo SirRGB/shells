@@ -1,4 +1,4 @@
-FROM docker.io/bitnami/minideb:bookworm
+FROM docker.io/bitnami/minideb:trixie
 
 ###################################
 ## Install build dependencies
@@ -6,11 +6,14 @@ RUN install_packages \
     ca-certificates \
     curl \
     gnupg \
-    ncurses-bin \
     wget \
     gcc \
     make \
-    libc-dev
+    libc-dev \
+## Install shell dependencies
+    ncurses-bin
+RUN wget http://ftp.debian.org/debian/pool/main/i/icu/libicu72_72.1-3+deb12u1_amd64.deb --directory-prefix=/tmp
+RUN dpkg --install /tmp/libicu72_72.1-3+deb12u1_amd64.deb
 
 
 ###################################
