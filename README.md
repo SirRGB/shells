@@ -21,6 +21,7 @@ Name | aliases | path | size
 [Hilbish](https://github.com/sammy-ette/Hilbish) | cd /opt/hilbish/<br>./hilbish | /opt/hilbish/hilbish | 8.6M
 [rc](https://github.com/rakitzis/rc) | rc | /usr/bin/rc -> /usr/bin/rc.byron | 120K
 [gsh](https://github.com/atinylittleshell/gsh) | gsh | /usr/local/bin/gsh | 21M
+[reshell](https://github.com/ClementNerma/ReShell) | reshell | /usr/bin/reshell | 12M
 
 ### Makefile
 - make all

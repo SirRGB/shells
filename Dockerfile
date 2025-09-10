@@ -85,6 +85,12 @@ RUN tar zxf /tmp/gsh_Linux_x86_64.tar.gz --directory=/tmp
 RUN mv /tmp/gsh /usr/local/bin
 
 
+# reshell
+RUN wget https://github.com/ClementNerma/ReShell/releases/download/v0.1.0-1445/reshell-repl-x86_64-unknown-linux-musl.tgz --directory-prefix=/tmp
+RUN tar zxf /tmp/reshell-repl-x86_64-unknown-linux-musl.tgz --directory=/tmp
+RUN mv /tmp/reshell /usr/local/bin
+
+
 ###################################
 ## Install Shells
 RUN install_packages \
