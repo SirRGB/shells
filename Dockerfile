@@ -34,11 +34,11 @@ RUN dpkg --install /tmp/packages-microsoft-prod.deb
 RUN wget https://etsh.dev/src/current/snapshots/etsh-current-24/etsh-current-24.tar.gz --directory-prefix=/tmp
 
 # Create directories and extract source into it
-RUN mkdir --parents /opt/etsh/
+RUN mkdir --parents /opt/etsh
 RUN tar zxf /tmp/etsh-current-24.tar.gz --directory=/opt/etsh
 
 # Build tsh and etsh
-WORKDIR /opt/etsh/etsh-current-24/
+WORKDIR /opt/etsh/etsh-current-24
 RUN ./configure && make etsh tsh
 
 # Symlink for usage
@@ -55,7 +55,7 @@ RUN echo "deb https://apt.fury.io/nushell/ /" | tee /etc/apt/sources.list.d/fury
 ## yet another shell
 # Get the source
 RUN wget https://github.com/magicant/yash/releases/download/2.59/yash-2.59.tar.gz --directory-prefix=/tmp
-RUN tar zxf /tmp/yash-2.59.tar.gz --directory=/tmp/
+RUN tar zxf /tmp/yash-2.59.tar.gz --directory=/tmp
 
 # Build yash and install
 WORKDIR /tmp/yash-2.59
@@ -75,8 +75,14 @@ RUN mkdir /opt/hilbish && tar zxf /tmp/hilbish-v2.3.4-linux-amd64.tar.gz --direc
 ## Oils
 RUN wget https://oils.pub/download/oils-for-unix-0.35.0.tar.gz --directory-prefix=/tmp
 WORKDIR /tmp/oils-for-unix-0.35.0
-RUN tar zxf /tmp/oils-for-unix-0.35.0.tar.gz --directory=/tmp/
+RUN tar zxf /tmp/oils-for-unix-0.35.0.tar.gz --directory=/tmp
 RUN ./configure && ./_build/oils.sh && ./install
+
+
+# gsh
+RUN wget https://github.com/atinylittleshell/gsh/releases/download/v0.22.2/gsh_Linux_x86_64.tar.gz --directory-prefix=/tmp
+RUN tar zxf /tmp/gsh_Linux_x86_64.tar.gz --directory=/tmp
+RUN mv /tmp/gsh /usr/local/bin
 
 
 ###################################
