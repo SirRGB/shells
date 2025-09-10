@@ -68,8 +68,8 @@ RUN mv ./dune /bin && chmod 770 /bin/dune
 
 
 ## Hilbish
-#RUN wget https://github.com/sammy-ette/Hilbish/releases/download/v2.3.4/hilbish-v2.3.4-linux-amd64.tar.gz --directory-prefix=/tmp
-#RUN tar zxf /tmp/hilbish-v2.3.4-linux-amd64.tar.gz -C /usr/local/bin
+RUN wget https://github.com/sammy-ette/Hilbish/releases/download/v2.3.4/hilbish-v2.3.4-linux-amd64.tar.gz --directory-prefix=/tmp
+RUN mkdir /opt/hilbish && tar zxf /tmp/hilbish-v2.3.4-linux-amd64.tar.gz -C /opt/hilbish
 
 
 ## Oils
