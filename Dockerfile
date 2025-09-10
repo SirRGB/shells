@@ -45,51 +45,26 @@ RUN parallel tar zxf {} --directory=/tmp ::: \
 ###################################
 ## Configure and install shells
 
+RUN parallel ::: \
 ## PowerShell
-# Install the Microsoft repository GPG keys
-RUN dpkg --install /tmp/packages-microsoft-prod.deb
-
-
-## (Enhanced) Thompson Shell
-# Build tsh and etsh
-WORKDIR /opt/etsh/etsh-current-24
-RUN ./configure && make etsh tsh
-
-# Symlink for usage
-RUN ln --symbolic /opt/etsh/etsh-current-24/tsh /usr/local/bin/tsh
-RUN ln --symbolic /opt/etsh/etsh-current-24/etsh /usr/local/bin/etsh
-
-
+    # Install the Microsoft repository GPG keys
+    "dpkg --install /tmp/packages-microsoft-prod.deb" \
 ## Nushell
-# Download and install the Nushell repository GPG keys
-RUN curl -fsSL https://apt.fury.io/nushell/gpg.key | gpg --dearmor -o /etc/apt/trusted.gpg.d/fury-nushell.gpg
-RUN echo "deb https://apt.fury.io/nushell/ /" | tee /etc/apt/sources.list.d/fury.list
+    # Download and install the Nushell repository GPG keys
+    "curl -fsSL https://apt.fury.io/nushell/gpg.key | gpg --dearmor -o /etc/apt/trusted.gpg.d/fury-nushell.gpg && \
+    echo 'deb https://apt.fury.io/nushell/ /' | tee /etc/apt/sources.list.d/fury.list"
 
-
+RUN parallel ::: \
+## (Enhanced) Thompson Shell
+    "cd /opt/etsh/etsh-current-24 && ./configure && make etsh tsh && \
+    # Symlink for usage
+    ln --symbolic /opt/etsh/etsh-current-24/tsh /usr/local/bin/tsh && \
+    ln --symbolic /opt/etsh/etsh-current-24/etsh /usr/local/bin/etsh" \
 ## yet another shell
-# Build yash and install
-WORKDIR /tmp/yash-2.59
-RUN ./configure --disable-lineedit && make install
-
-
-## dune
-RUN mv /tmp/dune_linux_v0.1.9 /usr/local/bin/dune && chmod 770 /usr/local/bin/dune
-
-
+    "cd /tmp/yash-2.59 && ./configure --disable-lineedit && make install" \
 ## Oils
-WORKDIR /tmp/oils-for-unix-0.35.0
-RUN ./configure && ./_build/oils.sh && ./install
-
-
-# gsh
-RUN mv /tmp/gsh /usr/local/bin
-
-
-# reshell
-RUN mv /tmp/reshell /usr/local/bin
-
-
-RUN install_packages \
+    "cd /tmp/oils-for-unix-0.35.0 && ./configure && ./_build/oils.sh && ./install" \
+"install_packages \
 # PowerShell
     powershell \
 # Z Shell
@@ -107,7 +82,16 @@ RUN install_packages \
 # Elvish Shell
     elvish \
 # rc
-    rc
+    rc"
+
+## dune
+RUN mv /tmp/dune_linux_v0.1.9 /usr/local/bin/dune && chmod 770 /usr/local/bin/dune
+
+# gsh
+RUN mv /tmp/gsh /usr/local/bin
+
+# reshell
+RUN mv /tmp/reshell /usr/local/bin
 
 
 ###################################
