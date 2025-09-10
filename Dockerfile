@@ -107,7 +107,7 @@ RUN apt remove -y \
 
 WORKDIR /root
 RUN apt autoremove -y
-RUN rm --recursive --force /tmp/*
+RUN rm --recursive --force /tmp/* /etc/apt/sources.list.d/fury.list
 
 # Remove Thompson Shell source code
 RUN find /opt/etsh/ -type f ! -name "tsh" ! -name "etsh" -exec rm {} \;
