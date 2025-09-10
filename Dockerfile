@@ -2,15 +2,18 @@ FROM docker.io/bitnami/minideb:trixie
 
 ###################################
 ## Install build dependencies
-RUN install_packages \
+ARG BUILD_PACKAGES="\
     ca-certificates \
     curl \
-    gnupg \
-    wget \
     g++ \
     gcc \
+    gnupg \
     make \
     libc-dev \
+    wget"
+
+RUN install_packages \
+    ${BUILD_PACKAGES} \
 ## Install shell dependencies
     ncurses-bin
 RUN wget http://ftp.debian.org/debian/pool/main/i/icu/libicu72_72.1-3+deb12u1_amd64.deb --directory-prefix=/tmp
@@ -100,14 +103,7 @@ RUN install_packages \
 ###################################
 ## Cleanup
 RUN apt remove -y \
-    ca-certificates \
-    curl \
-    g++ \
-    gcc \
-    gnupg \
-    make \
-    libc-dev \
-    wget
+    ${BUILD_PACKAGES}
 
 WORKDIR /root
 RUN apt autoremove -y
