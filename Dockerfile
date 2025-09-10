@@ -83,7 +83,7 @@ RUN ./configure && ./_build/oils.sh && ./install
 ## Install Shells
 RUN install_packages \
 # PowerShell
-     powershell \
+    powershell \
 # Z Shell
     zsh \
 # Friendly Interactive Shell
@@ -110,7 +110,7 @@ RUN apt autoremove -y
 RUN rm -rf /tmp/*
 
 # Remove Thompson Shell source code
-RUN find /opt/etsh/ -type f ! -name "tsh" ! -name "etsh" -exec rm -rf {} \;
+RUN find /opt/etsh/ -type f ! -name "tsh" ! -name "etsh" -exec rm {} \;
 
 COPY ./README.md /root
 COPY ./*.sh /root
