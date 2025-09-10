@@ -3,7 +3,7 @@
 All sizes are taken from du, which uses factors of 1024 i.e. Kibibyte/Mebibyte
 
 Name | aliases | path | size
----|---|---
+---|---|---|---|
 [Bourne Again Shell](https://cgit.git.savannah.gnu.org/cgit/bash.git) | bash, rbash | /bin/rbash -> /bin/bash | 1.3M
 [Debian Almquist Shell](http://gondor.apana.org.au/~herbert/dash) | sh, dash | /bin/sh -> /bin/dash |124K
 [Powershell](https://learn.microsoft.com/en-us/powershell/scripting/install/install-debian?view=powershell-7.5) | pwsh | /opt/microsoft/powershell/7/pwsh -> /usr/bin/pwsh | 76K
