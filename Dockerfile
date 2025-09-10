@@ -97,7 +97,9 @@ RUN install_packages \
 # Nushell
     nushell \
 # Elvish Shell
-    elvish
+    elvish \
+# rc
+    rc
 
 
 ###################################
