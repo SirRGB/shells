@@ -42,8 +42,8 @@ WORKDIR /opt/etsh/etsh-current-24/
 RUN ./configure && make etsh tsh
 
 # Symlink for usage
-RUN ln -s /opt/etsh/etsh-current-24/tsh /bin/tsh
-RUN ln -s /opt/etsh/etsh-current-24/etsh /bin/etsh
+RUN ln -s /opt/etsh/etsh-current-24/tsh /usr/local/bin/tsh
+RUN ln -s /opt/etsh/etsh-current-24/etsh /usr/local/bin/etsh
 
 
 ## Nushell
@@ -64,7 +64,7 @@ RUN ./configure --disable-lineedit && make install
 
 ## dune
 RUN wget --output-document dune https://github.com/adam-mcdaniel/dune/releases/download/v0.1.9/dune_linux_v0.1.9
-RUN mv ./dune /bin && chmod 770 /bin/dune
+RUN mv ./dune /usr/local/bin && chmod 770 /usr/local/bin/dune
 
 
 ## Hilbish
