@@ -7,6 +7,7 @@ RUN install_packages \
     curl \
     gnupg \
     wget \
+    g++ \
     gcc \
     make \
     libc-dev \
@@ -63,6 +64,18 @@ RUN wget --output-document dune https://github.com/adam-mcdaniel/dune/releases/d
 RUN mv ./dune /bin && chmod 770 /bin/dune
 
 
+## Hilbish
+#RUN wget https://github.com/sammy-ette/Hilbish/releases/download/v2.3.4/hilbish-v2.3.4-linux-amd64.tar.gz --directory-prefix=/tmp
+#RUN tar zxf /tmp/hilbish-v2.3.4-linux-amd64.tar.gz -C /usr/local/bin
+
+
+## Oils
+RUN wget https://oils.pub/download/oils-for-unix-0.35.0.tar.gz --directory-prefix=/tmp
+WORKDIR /tmp/oils-for-unix-0.35.0
+RUN tar zxf /tmp/oils-for-unix-0.35.0.tar.gz -C /tmp/
+RUN ./configure && ./_build/oils.sh && ./install
+
+
 ###################################
 ## Install Shells
 RUN install_packages \
@@ -89,12 +102,14 @@ RUN install_packages \
 RUN apt remove -y \
     ca-certificates \
     curl \
+    g++ \
     gcc \
     gnupg \
     make \
     libc-dev \
     wget
 
+WORKDIR /root
 RUN apt autoremove -y
 RUN rm -rf /tmp/*
 
@@ -104,4 +119,3 @@ RUN find /opt/etsh/ -type f ! -name "tsh" ! -name "etsh" -exec rm -rf {} \;
 COPY ./README.md /root
 COPY ./*.sh /root
 COPY ./*.ps1 /root
-WORKDIR /root

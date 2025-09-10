@@ -17,6 +17,7 @@ Name | aliases | size
 [elvish](https://elv.sh) | elvish | 7.9M
 [yet another shell](https://github.com/magicant/yash/blob/trunk/INSTALL) | yash | 1.2M
 [dune](https://github.com/adam-mcdaniel/dune) | dune | 7.2M
+[oils](https://github.com/oils-for-unix/oils/blob/master/INSTALL.txt) | osh, ysh | 2.4M
 
 ### Makefile
 - make all
