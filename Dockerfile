@@ -10,33 +10,47 @@ ARG BUILD_PACKAGES="\
     gnupg \
     make \
     libc-dev \
-    wget"
+    wget \
+    parallel"
 
 RUN install_packages \
     ${BUILD_PACKAGES} \
-## Install shell dependencies
+## Download and install shell dependencies
     ncurses-bin
-RUN wget http://ftp.debian.org/debian/pool/main/i/icu/libicu72_72.1-3+deb12u1_amd64.deb --directory-prefix=/tmp
+RUN mkdir --parents /opt/etsh /opt/hilbish
+RUN parallel wget --directory-prefix=/tmp ::: \
+    http://ftp.debian.org/debian/pool/main/i/icu/libicu72_72.1-3+deb12u1_amd64.deb \
+    https://packages.microsoft.com/config/debian/12/packages-microsoft-prod.deb \
+    https://etsh.dev/src/current/snapshots/etsh-current-24/etsh-current-24.tar.gz \
+    https://github.com/magicant/yash/releases/download/2.59/yash-2.59.tar.gz \
+    https://github.com/adam-mcdaniel/dune/releases/download/v0.1.9/dune_linux_v0.1.9 \
+    https://github.com/sammy-ette/Hilbish/releases/download/v2.3.4/hilbish-v2.3.4-linux-amd64.tar.gz \
+    https://github.com/atinylittleshell/gsh/releases/download/v0.22.2/gsh_Linux_x86_64.tar.gz \
+    https://oils.pub/download/oils-for-unix-0.35.0.tar.gz \
+    https://github.com/ClementNerma/ReShell/releases/download/v0.1.0-1445/reshell-repl-x86_64-unknown-linux-musl.tgz
 RUN dpkg --install /tmp/libicu72_72.1-3+deb12u1_amd64.deb
+
+## Extract archives
+RUN parallel tar zxf ::: \
+    /tmp/etsh-current-24.tar.gz /tmp/hilbish-v2.3.4-linux-amd64.tar.gz ::: \
+    --directory=/opt/etsh --directory=/opt/hilbish
+
+RUN parallel tar zxf {} --directory=/tmp ::: \
+    /tmp/yash-2.59.tar.gz \
+    /tmp/oils-for-unix-0.35.0.tar.gz \
+    /tmp/gsh_Linux_x86_64.tar.gz \
+    /tmp/reshell-repl-x86_64-unknown-linux-musl.tgz
 
 
 ###################################
-## Prepare install
+## Configure and install shells
 
 ## PowerShell
-# Download and install the Microsoft repository GPG keys
-RUN wget https://packages.microsoft.com/config/debian/12/packages-microsoft-prod.deb --directory-prefix=/tmp
+# Install the Microsoft repository GPG keys
 RUN dpkg --install /tmp/packages-microsoft-prod.deb
 
 
 ## (Enhanced) Thompson Shell
-# Get the source
-RUN wget https://etsh.dev/src/current/snapshots/etsh-current-24/etsh-current-24.tar.gz --directory-prefix=/tmp
-
-# Create directories and extract source into it
-RUN mkdir --parents /opt/etsh
-RUN tar zxf /tmp/etsh-current-24.tar.gz --directory=/opt/etsh
-
 # Build tsh and etsh
 WORKDIR /opt/etsh/etsh-current-24
 RUN ./configure && make etsh tsh
@@ -53,46 +67,28 @@ RUN echo "deb https://apt.fury.io/nushell/ /" | tee /etc/apt/sources.list.d/fury
 
 
 ## yet another shell
-# Get the source
-RUN wget https://github.com/magicant/yash/releases/download/2.59/yash-2.59.tar.gz --directory-prefix=/tmp
-RUN tar zxf /tmp/yash-2.59.tar.gz --directory=/tmp
-
 # Build yash and install
 WORKDIR /tmp/yash-2.59
 RUN ./configure --disable-lineedit && make install
 
 
 ## dune
-RUN wget --output-document dune https://github.com/adam-mcdaniel/dune/releases/download/v0.1.9/dune_linux_v0.1.9
-RUN mv ./dune /usr/local/bin && chmod 770 /usr/local/bin/dune
-
-
-## Hilbish
-RUN wget https://github.com/sammy-ette/Hilbish/releases/download/v2.3.4/hilbish-v2.3.4-linux-amd64.tar.gz --directory-prefix=/tmp
-RUN mkdir /opt/hilbish && tar zxf /tmp/hilbish-v2.3.4-linux-amd64.tar.gz --directory=/opt/hilbish
+RUN mv /tmp/dune_linux_v0.1.9 /usr/local/bin/dune && chmod 770 /usr/local/bin/dune
 
 
 ## Oils
-RUN wget https://oils.pub/download/oils-for-unix-0.35.0.tar.gz --directory-prefix=/tmp
 WORKDIR /tmp/oils-for-unix-0.35.0
-RUN tar zxf /tmp/oils-for-unix-0.35.0.tar.gz --directory=/tmp
 RUN ./configure && ./_build/oils.sh && ./install
 
 
 # gsh
-RUN wget https://github.com/atinylittleshell/gsh/releases/download/v0.22.2/gsh_Linux_x86_64.tar.gz --directory-prefix=/tmp
-RUN tar zxf /tmp/gsh_Linux_x86_64.tar.gz --directory=/tmp
 RUN mv /tmp/gsh /usr/local/bin
 
 
 # reshell
-RUN wget https://github.com/ClementNerma/ReShell/releases/download/v0.1.0-1445/reshell-repl-x86_64-unknown-linux-musl.tgz --directory-prefix=/tmp
-RUN tar zxf /tmp/reshell-repl-x86_64-unknown-linux-musl.tgz --directory=/tmp
 RUN mv /tmp/reshell /usr/local/bin
 
 
-###################################
-## Install Shells
 RUN install_packages \
 # PowerShell
     powershell \
