@@ -82,29 +82,26 @@ RUN parallel ::: \
 # Elvish Shell
     elvish \
 # rc
-    rc"
-
+    rc" \
 ## dune
-RUN mv /tmp/dune_linux_v0.1.9 /usr/local/bin/dune && chmod 770 /usr/local/bin/dune
-
+    "mv /tmp/dune_linux_v0.1.9 /usr/local/bin/dune && chmod 770 /usr/local/bin/dune" \
 # gsh
-RUN mv /tmp/gsh /usr/local/bin
-
+    "mv /tmp/gsh /usr/local/bin" \
 # reshell
-RUN mv /tmp/reshell /usr/local/bin
+    "mv /tmp/reshell /usr/local/bin"
 
 
 ###################################
 ## Cleanup
+WORKDIR /root
+RUN parallel ::: \
+    "rm --recursive --force /tmp/* /etc/apt/sources.list.d/fury.list" \
+# Remove Thompson Shell source code
+    "find /opt/etsh/ -type f ! -name "tsh" ! -name "etsh" -exec rm {} \;"
+
 RUN apt remove -y \
     ${BUILD_PACKAGES}
-
-WORKDIR /root
-RUN apt autoremove -y
-RUN rm --recursive --force /tmp/* /etc/apt/sources.list.d/fury.list
-
-# Remove Thompson Shell source code
-RUN find /opt/etsh/ -type f ! -name "tsh" ! -name "etsh" -exec rm {} \;
+RUN apt autoremove -y" \
 
 COPY ./README.md /root
 COPY ./*.sh /root
