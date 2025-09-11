@@ -6,15 +6,18 @@ ENV USER="root"
 ARG INSTALL_PATH=/usr/local/bin
 ARG BUILD_PACKAGES="\
     ca-certificates \
+    cargo \
     curl \
     g++ \
     gcc \
     gnupg \
     make \
     libc-dev \
+    libssl-dev \
     wget \
     parallel \
-    cargo"
+    pkg-config \
+    unzip"
 
 RUN install_packages \
     ${BUILD_PACKAGES} \
@@ -30,7 +33,8 @@ RUN parallel wget --directory-prefix=/tmp ::: \
     https://github.com/sammy-ette/Hilbish/releases/download/v2.3.4/hilbish-v2.3.4-linux-amd64.tar.gz \
     https://github.com/atinylittleshell/gsh/releases/download/v0.22.2/gsh_Linux_x86_64.tar.gz \
     https://oils.pub/download/oils-for-unix-0.35.0.tar.gz \
-    https://github.com/ClementNerma/ReShell/releases/download/v0.1.0-1445/reshell-repl-x86_64-unknown-linux-musl.tgz
+    https://github.com/ClementNerma/ReShell/releases/download/v0.1.0-1445/reshell-repl-x86_64-unknown-linux-musl.tgz \
+    https://github.com/tomhrr/cosh/archive/refs/heads/main.zip
 RUN dpkg --install /tmp/libicu72_72.1-3+deb12u1_amd64.deb
 
 ## Extract archives
@@ -44,6 +48,7 @@ RUN parallel tar zxf {} --directory=/tmp ::: \
     /tmp/gsh_Linux_x86_64.tar.gz \
     /tmp/reshell-repl-x86_64-unknown-linux-musl.tgz
 
+RUN unzip /tmp/main.zip -d /tmp
 
 ###################################
 ## Configure and install shells
@@ -67,6 +72,8 @@ RUN parallel ::: \
     "cd /tmp/yash-2.59 && ./configure --disable-lineedit && make install" \
 ## Oils
     "cd /tmp/oils-for-unix-0.35.0 && ./configure && ./_build/oils.sh && ./install" \
+## cosh
+    "cd /tmp/cosh-main && make && make install" \
 "install_packages \
 # PowerShell
     powershell \

@@ -23,6 +23,7 @@ Name | aliases | path | size
 [gsh](https://github.com/atinylittleshell/gsh) | gsh | /usr/local/bin/gsh | 21M
 [reshell](https://github.com/ClementNerma/ReShell) | reshell | /usr/bin/reshell | 12M
 [ion](https://gitlab.redox-os.org/redox-os/ion) |ion | /usr/local/bin/ion | 3.6M
+[cosh](https://github.com/tomhrr/cosh) | cosh | /usr/local/bin/cosh | 17M
 
 
 ### Makefile
