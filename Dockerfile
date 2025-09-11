@@ -75,23 +75,23 @@ RUN parallel ::: \
 ## cosh
     "cd /tmp/cosh-main && make && make install" \
 "install_packages \
-# PowerShell
+## PowerShell
     powershell \
-# Z Shell
+## Z Shell
     zsh \
-# Friendly Interactive Shell
+## Friendly Interactive Shell
     fish \
-# Korn Shell
+## Korn Shell
     ksh \
-# Teken C Shell
+## Teken C Shell
     tcsh \
-# Xonsh
+## Xonsh
     xonsh \
-# Nushell
+## Nushell
     nushell \
-# Elvish Shell
+## Elvish Shell
     elvish \
-# rc
+## rc
     rc" \
 ## dune
     "mv /tmp/dune_linux_v0.1.9 "${INSTALL_PATH}"/dune && chmod 770 "${INSTALL_PATH}"/dune" \
