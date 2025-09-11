@@ -7,7 +7,7 @@ Name | aliases | path | size
 [Bourne Again Shell](https://cgit.git.savannah.gnu.org/cgit/bash.git) | bash, rbash | /bin/rbash -> /bin/bash | 1.3M
 [Debian Almquist Shell](http://gondor.apana.org.au/~herbert/dash) | sh, dash | /bin/sh -> /bin/dash |124K
 [Powershell](https://learn.microsoft.com/en-us/powershell/scripting/install/install-debian?view=powershell-7.5) | pwsh | /opt/microsoft/powershell/7/pwsh -> /usr/bin/pwsh | 76K
-[Thompson Shell](https://etsh.dev/src) | tsh, etsh | /usr/local/bin/tsh -> /opt/etsh/etsh-current-24/tsh<br>/usr/local/bin/etsh -> /opt/etsh/etsh-current-24/etsh | 40K, 88K
+[Thompson Shell](https://etsh.dev/src) | tsh, etsh | /usr/local/bin/tsh<br>/usr/local/bin/etsh | 40K, 88K
 [Z Shell](https://www.zsh.org) | zsh, rzsh | /usr/bin/rzsh -> /usr/bin/zsh | 848K
 [Friendly Interactive Shell](https://fishshell.com) | fish | /usr/bin/fish | 1.8M
 [Korn Shell](http://kornshell.com) | ksh, ksh93, rksh | /usr/bin/ksh -> /bin/ksh93<br>/usr/bin/rksh -> /bin/ksh93 | 1.5M
