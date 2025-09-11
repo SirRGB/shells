@@ -2,6 +2,8 @@ FROM docker.io/bitnami/minideb:trixie
 
 ###################################
 ## Install build dependencies
+ENV USER="root"
+ARG INSTALL_PATH=/usr/local/bin
 ARG BUILD_PACKAGES="\
     ca-certificates \
     curl \
@@ -11,7 +13,8 @@ ARG BUILD_PACKAGES="\
     make \
     libc-dev \
     wget \
-    parallel"
+    parallel \
+    cargo"
 
 RUN install_packages \
     ${BUILD_PACKAGES} \
@@ -58,8 +61,8 @@ RUN parallel ::: \
 ## (Enhanced) Thompson Shell
     "cd /opt/etsh/etsh-current-24 && ./configure && make etsh tsh && \
     # Symlink for usage
-    ln --symbolic /opt/etsh/etsh-current-24/tsh /usr/local/bin/tsh && \
-    ln --symbolic /opt/etsh/etsh-current-24/etsh /usr/local/bin/etsh" \
+    ln --symbolic /opt/etsh/etsh-current-24/tsh "${INSTALL_PATH}"/tsh && \
+    ln --symbolic /opt/etsh/etsh-current-24/etsh "${INSTALL_PATH}"/etsh" \
 ## yet another shell
     "cd /tmp/yash-2.59 && ./configure --disable-lineedit && make install" \
 ## Oils
@@ -84,24 +87,29 @@ RUN parallel ::: \
 # rc
     rc" \
 ## dune
-    "mv /tmp/dune_linux_v0.1.9 /usr/local/bin/dune && chmod 770 /usr/local/bin/dune" \
+    "mv /tmp/dune_linux_v0.1.9 "${INSTALL_PATH}"/dune && chmod 770 "${INSTALL_PATH}"/dune" \
 # gsh
-    "mv /tmp/gsh /usr/local/bin" \
+    "mv /tmp/gsh "${INSTALL_PATH}"" \
 # reshell
-    "mv /tmp/reshell /usr/local/bin"
+    "mv /tmp/reshell "${INSTALL_PATH}"" \
+# ion
+    "cargo install --git https://gitlab.redox-os.org/redox-os/ion ion-shell && mv /root/.cargo/bin/ion "${INSTALL_PATH}"/ion"
 
 
 ###################################
 ## Cleanup
 WORKDIR /root
 RUN parallel ::: \
-    "rm --recursive --force /tmp/* /etc/apt/sources.list.d/fury.list" \
+# Remove nu repo for consecutive syncs
+    "rm --recursive /tmp/* /etc/apt/sources.list.d/fury.list" \
 # Remove Thompson Shell source code
-    "find /opt/etsh/ -type f ! -name "tsh" ! -name "etsh" -exec rm {} \;"
+    "find /opt/etsh/ -type f ! -name "tsh" ! -name "etsh" -exec rm {} \;" \
+# Remove leftover dotfiles
+    "rm --recursive /root/.cargo /root/.wget-hsts /root/.parallel"
 
 RUN apt remove -y \
     ${BUILD_PACKAGES}
-RUN apt autoremove -y" \
+RUN apt autoremove -y
 
 COPY ./README.md /root
 COPY ./*.sh /root

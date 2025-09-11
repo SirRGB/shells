@@ -22,6 +22,8 @@ Name | aliases | path | size
 [rc](https://github.com/rakitzis/rc) | rc | /usr/bin/rc -> /usr/bin/rc.byron | 120K
 [gsh](https://github.com/atinylittleshell/gsh) | gsh | /usr/local/bin/gsh | 21M
 [reshell](https://github.com/ClementNerma/ReShell) | reshell | /usr/bin/reshell | 12M
+[ion](https://gitlab.redox-os.org/redox-os/ion) |ion | /usr/local/bin/ion | 3.6M
+
 
 ### Makefile
 - make all
