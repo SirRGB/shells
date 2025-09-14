@@ -1,7 +1,7 @@
 all: build run
 
 build:
-	docker build . -t shells
+	docker build . --tag shells
 
 run:
-	docker run -i -t shells
+	docker run --interactive --tty shells
