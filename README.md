@@ -16,7 +16,7 @@ Name | aliases | path | size
 [nushell](https://www.nushell.sh) | nu | /usr/bin/nu | 44M
 [elvish](https://elv.sh) | elvish | /usr/bin/elvish | 7.9M
 [yet another shell](https://github.com/magicant/yash/blob/trunk/INSTALL) | yash | /usr/local/bin/yash | 1.2M
-[dune](https://github.com/adam-mcdaniel/dune) | dune | /usr/local/bin/dune | 7.2M
+[dune](https://github.com/adam-mcdaniel/dune) | dunesh | /usr/local/bin/dunesh | 7.2M
 [oils](https://github.com/oils-for-unix/oils/blob/master/INSTALL.txt) | osh, ysh | /usr/local/bin/osh -> /usr/local/bin/oils-for-unix<br>/usr/local/bin/ysh -> /usr/local/bin/oils-for-unix | 2.4M
 [Hilbish](https://github.com/sammy-ette/Hilbish) | cd /opt/hilbish/<br>./hilbish | /opt/hilbish/hilbish | 8.6M
 [rc](https://github.com/rakitzis/rc) | rc | /usr/bin/rc -> /usr/bin/rc.byron | 120K
