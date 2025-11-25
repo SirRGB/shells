@@ -1,10 +1,10 @@
 all: build run
 
 build:
-	docker build . --tag sirrgb/shells
+	docker build . --tag docker.io/sirrgb/shells:latest
 
 run:
-	docker run --interactive --tty sirrgb/shells
+	docker run --interactive --tty docker.io/sirrgb/shells:latest
 
 publish:
-	docker push sirrgb/shells
+	docker image push docker.io/sirrgb/shells:latest
