@@ -52,13 +52,6 @@ RUN unzip /tmp/main.zip -d /tmp
 ## Configure and install shells
 
 RUN parallel ::: \
-## PowerShell
-    # Install the Microsoft repository GPG keys
-    "dpkg --install /tmp/packages-microsoft-prod.deb" \
-## Nushell
-    # Download and install the Nushell repository GPG keys
-    "curl -fsSL https://apt.fury.io/nushell/gpg.key | gpg --dearmor -o /etc/apt/trusted.gpg.d/fury-nushell.gpg && \
-    echo 'deb https://apt.fury.io/nushell/ /' | tee /etc/apt/sources.list.d/fury.list" \
 ## (Enhanced) Thompson Shell
     "cd /tmp/etsh-current-24 && ./configure && make etsh tsh && \
     # Move for usage
@@ -70,7 +63,14 @@ RUN parallel ::: \
     "cd /tmp/oils-for-unix-0.35.0 && ./configure && ./_build/oils.sh && ./install" \
 ## cosh
     "cd /tmp/cosh-main && make && make install" \
-"install_packages \
+## Nushell
+    # Download and install the Nushell repository GPG keys
+    "curl -fsSL https://apt.fury.io/nushell/gpg.key | gpg --dearmor -o /etc/apt/keyrings/fury-nushell.gpg && \
+    echo 'deb [signed-by=/etc/apt/keyrings/fury-nushell.gpg] https://apt.fury.io/nushell/ /' | tee /etc/apt/sources.list.d/fury.list && \
+## PowerShell
+    # Install the Microsoft repository GPG keys
+    dpkg --install /tmp/packages-microsoft-prod.deb && \
+install_packages \
 ## PowerShell
     powershell \
 ## Z Shell
