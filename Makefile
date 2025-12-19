@@ -7,4 +7,5 @@ run:
 	docker run --interactive --tty docker.io/sirrgb/shells:latest
 
 publish:
+	docker image push docker.io/sirrgb/shells:$$(date +%Y%m%d%H%M)
 	docker image push docker.io/sirrgb/shells:latest
