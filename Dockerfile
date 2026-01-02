@@ -14,12 +14,11 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update -qq && DEBIAN_FRONTEND=noninte
     make \
     libc-dev \
     libssl-dev \
-    wget \
     parallel \
     pkg-config \
     unzip
 RUN mkdir --parents /opt/hilbish
-RUN parallel wget --directory-prefix=/tmp ::: \
+RUN parallel curl --fail --silent --show-error --location --remote-name --output-dir /tmp ::: \
     http://ftp.debian.org/debian/pool/main/i/icu/libicu72_72.1-3+deb12u1_amd64.deb \
     https://packages.microsoft.com/config/debian/12/packages-microsoft-prod.deb \
     https://etsh.dev/src/current/snapshots/etsh-current-24/etsh-current-24.tar.gz \
@@ -57,7 +56,7 @@ RUN parallel ::: \
     "cargo install --git https://gitlab.redox-os.org/redox-os/ion ion-shell" \
 ## Nushell
     # Download and install the Nushell repository GPG keys
-    "curl -fsSL https://apt.fury.io/nushell/gpg.key | gpg --dearmor -o /etc/apt/keyrings/fury-nushell.gpg" \
+    "curl --fail --silent --show-error --location https://apt.fury.io/nushell/gpg.key | gpg --dearmor -o /etc/apt/keyrings/fury-nushell.gpg" \
 ## dune
     "cargo install dune"
 
