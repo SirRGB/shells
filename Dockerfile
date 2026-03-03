@@ -90,10 +90,11 @@ RUN echo 'deb [signed-by=/etc/apt/keyrings/fury-nushell.gpg] https://apt.fury.io
 
 ## PowerShell
 COPY --from=builder /tmp/*.deb /tmp/
+RUN dpkg --install /tmp/*.deb
+## Nushell
 RUN DEBIAN_FRONTEND=noninteractive apt-get update -qq && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
     ca-certificates && \
-    dpkg --install /tmp/*.deb
-RUN DEBIAN_FRONTEND=noninteractive apt-get update -qq && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+DEBIAN_FRONTEND=noninteractive apt-get update -qq && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
 # clear
     ncurses-bin	\
 ## Z Shell
