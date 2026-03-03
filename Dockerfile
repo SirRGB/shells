@@ -79,6 +79,8 @@ COPY --from=builder /tmp/gsh "${INSTALL_PATH}"/gsh
 COPY --from=builder /tmp/reshell "${INSTALL_PATH}"/reshell
 ## ion
 COPY --from=builder /root/.cargo/bin/ion "${INSTALL_PATH}"/ion
+## hilbish
+COPY --from=builder /opt/hilbish /opt/hilbish
 
 ## Nushell
     # Download and install the Nushell repository GPG keys
