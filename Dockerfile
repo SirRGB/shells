@@ -33,11 +33,8 @@ RUN parallel curl --fail --silent --show-error --location --remote-name --output
 ## Extract archives
 RUN tar zxf /tmp/hilbish-v2.3.4-linux-amd64.tar.gz --directory=/opt/hilbish
 RUN parallel tar zxf {} --directory=/tmp ::: \
-    /tmp/etsh-current-24.tar.gz \
-    /tmp/yash-2.61.tar.gz \
-    /tmp/oils-for-unix-0.36.0.tar.gz \
-    /tmp/gsh_Linux_x86_64.tar.gz \
-    /tmp/reshell-repl-x86_64-unknown-linux-musl.tgz
+    /tmp/*.tar.gz \
+    /tmp/*.tgz
 
 RUN unzip /tmp/main.zip -d /tmp
 
