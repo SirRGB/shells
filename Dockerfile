@@ -22,7 +22,7 @@ RUN pwsh_dl=$(curl --fail --silent --show-error https://api.github.com/repos/Pow
 RUN parallel curl --fail --silent --show-error --location --remote-name --output-dir /tmp ::: \
     http://ftp.debian.org/debian/pool/main/i/icu/libicu72_72.1-3+deb12u1_amd64.deb \
     https://etsh.dev/src/current/snapshots/etsh-current-24/etsh-current-24.tar.gz \
-    https://github.com/magicant/yash/releases/download/2.60/yash-2.60.tar.gz \
+    https://github.com/magicant/yash/releases/download/2.61/yash-2.61.tar.gz \
     https://github.com/sammy-ette/Hilbish/releases/download/v2.3.4/hilbish-v2.3.4-linux-amd64.tar.gz \
     https://github.com/atinylittleshell/gsh/releases/download/v0.22.2/gsh_Linux_x86_64.tar.gz \
     https://oils.pub/download/oils-for-unix-0.36.0.tar.gz \
@@ -34,7 +34,7 @@ RUN parallel curl --fail --silent --show-error --location --remote-name --output
 RUN tar zxf /tmp/hilbish-v2.3.4-linux-amd64.tar.gz --directory=/opt/hilbish
 RUN parallel tar zxf {} --directory=/tmp ::: \
     /tmp/etsh-current-24.tar.gz \
-    /tmp/yash-2.60.tar.gz \
+    /tmp/yash-2.61.tar.gz \
     /tmp/oils-for-unix-0.36.0.tar.gz \
     /tmp/gsh_Linux_x86_64.tar.gz \
     /tmp/reshell-repl-x86_64-unknown-linux-musl.tgz
@@ -48,7 +48,7 @@ RUN parallel ::: \
 ## (Enhanced) Thompson Shell
     "cd /tmp/etsh-current-24 && ./configure && make etsh tsh" \
 ## yet another shell
-    "cd /tmp/yash-2.60 && ./configure --disable-lineedit && make install" \
+    "cd /tmp/yash-2.61 && ./configure --disable-lineedit && make install" \
 ## Oils
     "cd /tmp/oils-for-unix-0.36.0 && ./configure && ./_build/oils.sh && ./install" \
 ## cosh
