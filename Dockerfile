@@ -18,7 +18,6 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update -qq && DEBIAN_FRONTEND=noninte
     pkg-config \
     unzip
 RUN mkdir --parents /opt/hilbish
-RUN pwsh_dl=$(curl --fail --silent --show-error https://api.github.com/repos/PowerShell/PowerShell/releases/latest | grep -E "download.*.deb_amd64.deb" | cut -d":" -f2- | tr -d " \"")
 RUN parallel curl --fail --silent --show-error --location --remote-name --output-dir /tmp ::: \
     http://ftp.debian.org/debian/pool/main/i/icu/libicu72_72.1-3+deb12u1_amd64.deb \
     https://etsh.dev/src/current/snapshots/etsh-current-24/etsh-current-24.tar.gz \
@@ -28,7 +27,7 @@ RUN parallel curl --fail --silent --show-error --location --remote-name --output
     https://oils.pub/download/oils-for-unix-0.36.0.tar.gz \
     https://github.com/ClementNerma/ReShell/releases/download/v0.1.0-1534/reshell-repl-x86_64-unknown-linux-musl.tgz \
     https://github.com/tomhrr/cosh/archive/refs/heads/main.zip \
-    ${pwsh_dl}
+    https://github.com/PowerShell/PowerShell/releases/download/v7.5.4/powershell_7.5.4-1.deb_amd64.deb
 
 ## Extract archives
 RUN tar zxf /tmp/hilbish-v2.3.4-linux-amd64.tar.gz --directory=/opt/hilbish
@@ -88,12 +87,19 @@ COPY --from=builder /etc/apt/keyrings/fury-nushell.gpg /etc/apt/keyrings/fury-nu
 RUN echo 'deb [signed-by=/etc/apt/keyrings/fury-nushell.gpg] https://apt.fury.io/nushell/ /' | tee /etc/apt/sources.list.d/fury.list
 
 ## PowerShell
+RUN DEBIAN_FRONTEND=noninteractive apt-get update -qq && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+  krb5-locales \
+  libcom-err2 \
+  libgssapi-krb5-2 \
+  libk5crypto3 \
+  libkeyutils1 \
+  libkrb5-3 \
+  libkrb5support0 \
+## Nushell
+  ca-certificates
 COPY --from=builder /tmp/*.deb /tmp/
 RUN dpkg --install /tmp/*.deb
-## Nushell
 RUN DEBIAN_FRONTEND=noninteractive apt-get update -qq && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-    ca-certificates && \
-DEBIAN_FRONTEND=noninteractive apt-get update -qq && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
 # clear
     ncurses-bin	\
 ## Z Shell
