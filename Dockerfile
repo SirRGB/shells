@@ -27,7 +27,7 @@ RUN parallel curl --fail --silent --show-error --location --remote-name --output
     https://oils.pub/download/oils-for-unix-0.37.0.tar.gz \
     https://github.com/ClementNerma/ReShell/releases/download/v0.1.0-1544/reshell-x86_64-unknown-linux-musl.tgz \
     https://github.com/tomhrr/cosh/archive/refs/heads/main.zip \
-    https://github.com/PowerShell/PowerShell/releases/download/v7.5.4/powershell_7.5.4-1.deb_amd64.deb
+    https://github.com/PowerShell/PowerShell/releases/download/v7.5.5/powershell_7.5.5-1.deb_amd64.deb
 
 ## Extract archives
 RUN tar zxf /tmp/hilbish-v2.3.4-linux-amd64.tar.gz --directory=/opt/hilbish
