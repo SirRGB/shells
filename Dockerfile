@@ -59,6 +59,7 @@ RUN parallel ::: \
 
 FROM docker.io/debian:trixie-slim AS runner
 ARG INSTALL_PATH=/usr/local/bin
+ENV USER=root
 
 ## yet another shell
 COPY --from=builder /usr/local/bin/yash "${INSTALL_PATH}"/yash
