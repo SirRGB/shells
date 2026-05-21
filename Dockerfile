@@ -19,7 +19,6 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update -qq && DEBIAN_FRONTEND=noninte
     unzip
 RUN mkdir --parents /opt/hilbish
 RUN parallel curl --fail --silent --show-error --location --remote-name --output-dir /tmp ::: \
-    http://ftp.debian.org/debian/pool/main/i/icu/libicu72_72.1-3+deb12u1_amd64.deb \
     https://etsh.dev/src/current/snapshots/etsh-current-24/etsh-current-24.tar.gz \
     https://github.com/magicant/yash/releases/download/2.61/yash-2.61.tar.gz \
     https://github.com/sammy-ette/Hilbish/releases/download/v2.3.4/hilbish-v2.3.4-linux-amd64.tar.gz \
@@ -27,7 +26,7 @@ RUN parallel curl --fail --silent --show-error --location --remote-name --output
     https://oils.pub/download/oils-for-unix-0.37.0.tar.gz \
     https://github.com/ClementNerma/ReShell/releases/download/v0.1.0-1544/reshell-x86_64-unknown-linux-musl.tgz \
     https://github.com/tomhrr/cosh/archive/refs/heads/main.zip \
-    https://github.com/PowerShell/PowerShell/releases/download/v7.5.5/powershell_7.5.5-1.deb_amd64.deb
+    https://packages.microsoft.com/config/debian/13/packages-microsoft-prod.deb
 
 ## Extract archives
 RUN tar zxf /tmp/hilbish-v2.3.4-linux-amd64.tar.gz --directory=/opt/hilbish
@@ -88,13 +87,6 @@ RUN echo 'deb [signed-by=/etc/apt/keyrings/fury-nushell.gpg] https://apt.fury.io
 
 ## PowerShell
 RUN DEBIAN_FRONTEND=noninteractive apt-get update -qq && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-  krb5-locales \
-  libcom-err2 \
-  libgssapi-krb5-2 \
-  libk5crypto3 \
-  libkeyutils1 \
-  libkrb5-3 \
-  libkrb5support0 \
 ## Nushell
   ca-certificates
 COPY --from=builder /tmp/*.deb /tmp/
@@ -117,7 +109,9 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update -qq && DEBIAN_FRONTEND=noninte
 ## Elvish Shell
     elvish \
 ## rc
-    rc
+    rc \
+## PowerShell
+    powershell-preview
 
 ###################################
 ## Cleanup
