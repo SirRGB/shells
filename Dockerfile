@@ -112,7 +112,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update -qq && DEBIAN_FRONTEND=noninte
 ## rc
     rc \
 ## PowerShell
-    powershell-preview
+    powershell
 
 ###################################
 ## Cleanup
