@@ -23,7 +23,7 @@ RUN parallel curl --fail --silent --show-error --location --remote-name --output
     https://github.com/magicant/yash/releases/download/2.61/yash-2.61.tar.gz \
     https://github.com/sammy-ette/Hilbish/releases/download/v2.3.4/hilbish-v2.3.4-linux-amd64.tar.gz \
     https://github.com/atinylittleshell/gsh/releases/download/v1.11.1/gsh_Linux_x86_64.tar.gz \
-    https://oils.pub/download/oils-for-unix-0.37.0.tar.gz \
+    https://oils.pub/download/oils-for-unix-0.38.0.tar.gz \
     https://github.com/ClementNerma/ReShell/releases/download/v0.1.0-1544/reshell-x86_64-unknown-linux-musl.tgz \
     https://github.com/tomhrr/cosh/archive/refs/heads/main.zip \
     https://packages.microsoft.com/config/debian/13/packages-microsoft-prod.deb
@@ -45,7 +45,7 @@ RUN parallel ::: \
 ## yet another shell
     "cd /tmp/yash-2.61 && ./configure --disable-lineedit && make install" \
 ## Oils
-    "cd /tmp/oils-for-unix-0.37.0 && ./configure && ./_build/oils.sh && ./install" \
+    "cd /tmp/oils-for-unix-0.38.0 && ./configure && ./_build/oils.sh && ./install" \
 ## cosh
     "cd /tmp/cosh-main && make && make install" \
 ## ion
