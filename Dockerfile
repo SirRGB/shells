@@ -26,7 +26,8 @@ RUN parallel curl --fail --silent --show-error --location --remote-name --output
     https://oils.pub/download/oils-for-unix-0.38.0.tar.gz \
     https://github.com/ClementNerma/ReShell/releases/download/v0.1.0-1544/reshell-x86_64-unknown-linux-musl.tgz \
     https://github.com/tomhrr/cosh/archive/refs/heads/main.zip \
-    https://packages.microsoft.com/config/debian/13/packages-microsoft-prod.deb
+    https://packages.microsoft.com/config/debian/13/packages-microsoft-prod.deb \
+    https://github.com/adam-mcdaniel/dune/releases/download/v0.1.9/dune_linux_v0.1.9
 
 ## Extract archives
 RUN tar zxf /tmp/hilbish-v2.3.4-linux-amd64.tar.gz --directory=/opt/hilbish
@@ -54,7 +55,7 @@ RUN parallel ::: \
     # Download and install the Nushell repository GPG keys
     "curl --fail --silent --show-error --location https://apt.fury.io/nushell/gpg.key | gpg --dearmor -o /etc/apt/keyrings/fury-nushell.gpg" \
 ## dune
-    "cargo install dune"
+    "chmod a+x /tmp/dune_linux_v*"
 
 
 FROM docker.io/debian:trixie-slim AS runner
@@ -71,7 +72,7 @@ COPY --from=builder /usr/local/lib/cosh/* "${INSTALL_PATH}"/../lib/cosh/
 ## (Enhanced) Thompson Shell
 COPY --from=builder /tmp/etsh-current-24/tsh /tmp/etsh-current-24/etsh "${INSTALL_PATH}"/
 ## dune
-COPY --from=builder /root/.cargo/bin/dunesh "${INSTALL_PATH}"/dunesh
+COPY --from=builder /tmp/dune_linux_v* "${INSTALL_PATH}"/dunesh
 ## gsh
 COPY --from=builder /tmp/gsh "${INSTALL_PATH}"/gsh
 ## reshell
