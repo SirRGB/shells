@@ -1,4 +1,4 @@
-FROM docker.io/debian:trixie-slim AS builder
+FROM docker.io/rust:1-slim-trixie AS builder
 
 ###################################
 ## Install build dependencies
@@ -6,7 +6,6 @@ ENV USER="root"
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get update -qq && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
     ca-certificates \
-    cargo \
     curl \
     g++ \
     gcc \
@@ -78,7 +77,7 @@ COPY --from=builder /tmp/gsh "${INSTALL_PATH}"/gsh
 ## reshell
 COPY --from=builder /tmp/reshell "${INSTALL_PATH}"/reshell
 ## ion
-COPY --from=builder /root/.cargo/bin/ion "${INSTALL_PATH}"/ion
+COPY --from=builder /usr/local/cargo/bin/ion "${INSTALL_PATH}"/ion
 ## hilbish
 COPY --from=builder /opt/hilbish /opt/hilbish
 
